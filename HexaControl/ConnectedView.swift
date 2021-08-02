@@ -145,10 +145,7 @@ struct ConnectedView: View {
         ZStack{
             if !menuOpen{
                 ZStack{
-                    WebView(url: .localUrl, addr: "", viewModel: viewModel).overlay (
-                        RoundedRectangle(cornerRadius: 4, style: .circular)
-                            .stroke(Color.gray, lineWidth: 0.5)
-                    )
+                    WebView(url: .localUrl, addr: "", viewModel: viewModel)
                     .onReceive(self.viewModel.showLoader.receive(on: RunLoop.main)) { value in
                         if value == false{
                             self.viewModel.valuePublisher.send(hexaLink + """
@@ -192,6 +189,8 @@ struct ConnectedView: View {
                     VStack{
                         if isSearching{
                             ProgressView("Waiting for controller to be connected.")
+                            Text("Please use bluetooth or directly connect a controller.")
+                                .padding()
                         } else {
                             VStack {
                                 Text("Connected to \(conName)")

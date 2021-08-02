@@ -9,7 +9,10 @@ import SwiftUI
 
 struct HomeView: View {
     var body: some View {
-        Text("Home!")
+        
+        Text("Please go to the hexa app and run the 'HexaControl' skill.")
+            .font(.title2)
+            .padding()
     }
 }
 

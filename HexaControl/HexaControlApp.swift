@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct HexaControlApp: App {
-    @State private var isLink = true
+    @State private var isLink = false
     @State private var hexaLink = ""
     
     
@@ -17,15 +17,21 @@ struct HexaControlApp: App {
         WindowGroup {
             if isLink {
                 NavigationView{
-                ConnectedView(hexaLink: $hexaLink)
+                    ConnectedView(hexaLink: $hexaLink)
+                }.navigationViewStyle(StackNavigationViewStyle())
+                .onOpenURL(perform: { url in
+                    print("opened")
+                    isLink = true
+                    hexaLink = String(url.absoluteString.dropFirst(20)).removingPercentEncoding!
+                })
+                
+            } else {
+                HomeView()
                     .onOpenURL(perform: { url in
+                        print("opened")
                         isLink = true
                         hexaLink = String(url.absoluteString.dropFirst(20)).removingPercentEncoding!
                     })
-                }.navigationViewStyle(StackNavigationViewStyle())
-
-            } else {
-                HomeView()
             }
         }
     }
