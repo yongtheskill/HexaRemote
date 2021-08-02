@@ -1,0 +1,240 @@
+String.prototype.formatResCode = function(){
+	var _data       = ""
+	var _smallClass = ""
+
+	var _value      = this.valueOf()
+
+	for(var i = 1 ; i < _value.length ; i++){
+		if(_value[i].charCodeAt(0)<32){
+			_smallClass += _value[i].charCodeAt(0)
+		}else{
+			_data = _value.slice(i)
+			break
+		}
+	}
+	return {
+		bigClass: _value.charCodeAt(0),
+		smallClass: _smallClass,
+		data: _data
+	}
+}
+
+
+
+EVENT_MAP = {
+	"2_2": "Pong",
+	"6_5": "GetRobotInfoSuccess",
+	"6_6": "GetRobotInfoFailed",
+	"3_2": "ConnectSkillSuccess",
+	"3_3": "ConnectSkillFailed",
+	"3_5": "DisconnectSkillSuccess",
+	"3_6": "DisconnectSkillFailed",
+	"3_8": "StopSkillSuccess",
+	"3_9": "StopSkillFailed",
+	"4_1": "RecvSkillData",
+	"4_2": "RecvSkillError",
+}
+
+/**
+ * eventQueue = {
+ *     eventType: {
+ *     		once: bool,
+ *     		callback: func,
+ *     		handlers: [func]
+ *     }
+ * }
+ */
+
+function HexaEvent(){
+	var self = this
+	self._eventQueue = {}
+	/* 只绑定一次的事件 */
+	self.once = function(eventType, callback){
+		if(!self._eventQueue[eventType]){
+			self._eventQueue[eventType] = {
+				once: true,
+				callback: callback
+			}
+		}
+	}
+	/* 持续绑定的事件 */
+	self.on = function(eventType, handler){
+		/*进入队列push*/
+		if(!self._eventQueue[eventType]){
+			self._eventQueue[eventType] = {
+				once: false,
+				callback: function(data){
+					for(var i = 0;i < self._eventQueue[eventType].handlers.length; i++){
+						self._eventQueue[eventType].handlers[i](data)
+					}
+				},
+				handlers: []
+			}
+		}
+		self._eventQueue[eventType].handlers.push(handler)
+	}
+	self.dispatch = function(eventType, data){
+		if(self._eventQueue[eventType] && typeof self._eventQueue[eventType].callback === 'function'){
+			var _tempCallback = self._eventQueue[eventType].callback
+			if(self._eventQueue[eventType].once){
+				delete self._eventQueue[eventType]
+			}
+			_tempCallback(data)
+		}
+	}
+}
+
+
+/*==========Mind==========*/
+function Mind(option){
+	if(!option.userhash) return alert('Account initialization failed')/*这里需要添加userhash的验证机制*/
+	var _this = this
+	HexaEvent.call(this)
+	this.userhash = option.userhash
+}
+
+Mind.prototype.init = function(params){
+	var _this = this
+	this.once('connectSuccess',function(){
+		params.callback&&params.callback(new HEXA(_this.ws))
+	})
+	this.once('connectFailed', function(error){
+		params.error&&params.error(error)
+	})
+
+	this.ws = new WebSocket('ws://' + HEXA_IP + ':' + HEXA_PORT + '/remotes?userhash=' + this.userhash)
+	
+	var isTimeout = true;
+	setTimeout(function(){
+		if(isTimeout){
+			alert('Time out');
+		}
+	}, 3000)
+	this.ws.onerror = function(wsEvent){
+		isTimeout = null;
+		_this.dispatch('connectFailed', 'WebSocket connection to ' + wsEvent.currentTarget.url + ' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED')
+	}
+	this.ws.onopen = function(){
+		isTimeout = null;
+		_this.dispatch('connectSuccess',null)
+	}
+}
+
+/*==========HEXA==========*/
+function HEXA(webSocket){
+	HexaEvent.call(this)
+	var _this   = this
+	this.ws     = webSocket
+	this.reader = new FileReader()
+
+	this.reader.addEventListener('loadend', function(){
+
+		var _result      = _this.reader.result.formatResCode()
+		var _eventType   = _result.bigClass + '_' + _result.smallClass 
+		var _callbackRes = _result.data
+
+		_this.reading = false
+		_this.dispatch(EVENT_MAP[_eventType], _callbackRes.indexOf('{') == -1? _callbackRes : JSON.parse(_callbackRes))
+		
+	})
+	_this.on('Pong',function(){
+
+	})
+	this.heartBeat = setInterval(function(){
+		_this.ws.send('')
+	}, 5000)
+
+	this.ws.onmessage = function(message){
+		_this.readMessage(message)
+	}
+
+	this.readMessage = function(message){
+		/*防止连续读取失败*/
+		if(!_this.reading){
+			_this.reading = true
+			_this.reader.readAsText(message.data)
+		}else{
+			setTimeout(function(){
+				_this.readMessage(message)
+			}, 200)
+		}
+	}
+}
+
+HEXA.prototype._once = function(eDoing, eSuccess, eFailed, eTimeout, data, params){
+	if(this._eventQueue[eDoing]) return params.error&&params.error("sendingMessage")
+
+	var _this = this
+
+	this.ws.send(data)
+	this.once(eDoing, null) //
+
+	this._eventQueue[eTimeout] = setTimeout(function(){
+		delete _this._eventQueue[eFailed]
+		delete _this._eventQueue[eSuccess]
+		delete _this._eventQueue[eDoing]
+		clearTimeout(_this._eventQueue[eTimeout])
+		delete _this._eventQueue[eTimeout]
+		params.error&&params.error(eTimeout)
+	}, 3000)
+
+	this.once(eSuccess, function(data){
+		delete _this._eventQueue[eFailed]
+		delete _this._eventQueue[eDoing]
+		clearTimeout(_this._eventQueue[eTimeout])
+		delete _this._eventQueue[eTimeout]
+		params.callback&&params.callback(data)
+	})
+	this.once(eFailed, function(error){
+		delete _this._eventQueue[eSuccess]
+		delete _this._eventQueue[eDoing]
+		clearTimeout(_this._eventQueue[eTimeout])
+		delete _this._eventQueue[eTimeout]
+		params.error&&params.error(error)
+	})
+}
+
+HEXA.prototype.getInfo = function(params){
+	this._once('GetRobotInfoIng', 'GetRobotInfoSuccess', 'GetRobotInfoFailed', 'GetRobotInfoTimeout',"", params)
+}
+HEXA.prototype.connectSkill = function(params){
+	this._once('ConnectSkillIng', 'ConnectSkillSuccess', 'ConnectSkillFailed', 'ConnectSkillTimeout', ""+ '{"skillId":"' + params.skillID + '"}', params)
+}
+
+HEXA.prototype.disconnectSkill = function(params){
+	this._once('DisconnectSkillIng', 'DisconnectSkillSuccess', 'DisconnectSkillFailed', 'DisconnectSkillTimeout', ""+'{"skillId":"' + params.skillID + '"}', params)
+}
+
+HEXA.prototype.stopSkill = function(params){
+	this._once('StopSkillIng', 'StopSkillSuccess', 'StopSkillFailed', 'StopSkillTimeout', "" + '{"skillId":"' + params.skillID + '"}', params)
+}
+
+HEXA.prototype.onRecvSkillData = function(callback){
+	this.on('RecvSkillData', function(data){
+		callback&&callback(data.skillID, data.data)
+	})
+}
+
+HEXA.prototype.sendData = function(params){
+	var data = {
+		"skillId": params.skillID,
+		"data": params.data
+	}
+	this.data = data
+	try{
+		setTimeout(function(){params.callback&&params.callback()}, 0) //异步发起callback
+		this.ws.send("" + JSON.stringify(data)) //发就没有发成失败error，机器人回复error，超时
+		this.on('RecvSkillError',function(error){
+			params.error&&params.error(error)
+		})
+	}catch(e){
+		params.error&&params.error(e)
+	}
+}
+HEXA.prototype.onDisconnect = function(callback){
+	var _this = this
+	this.ws.onclose = function(res){
+		clearInterval(_this.heartBeat)
+		callback&&callback(res.reason)
+	}
+}

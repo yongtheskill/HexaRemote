@@ -8,18 +8,35 @@
 
 /* Begin PBXBuildFile section */
 		A6917A9826B54B1700EE7DBE /* HexaControlApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6917A9726B54B1700EE7DBE /* HexaControlApp.swift */; };
-		A6917A9A26B54B1700EE7DBE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6917A9926B54B1700EE7DBE /* ContentView.swift */; };
 		A6917A9C26B54B1700EE7DBE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A6917A9B26B54B1700EE7DBE /* Assets.xcassets */; };
 		A6917A9F26B54B1700EE7DBE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A6917A9E26B54B1700EE7DBE /* Preview Assets.xcassets */; };
+		A6917AA926B54B7C00EE7DBE /* ConnectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6917AA826B54B7C00EE7DBE /* ConnectedView.swift */; };
+		A6917AAB26B54B9B00EE7DBE /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6917AAA26B54B9B00EE7DBE /* HomeView.swift */; };
+		A6917AAE26B54C9100EE7DBE /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6917AAD26B54C9100EE7DBE /* GameController.framework */; };
+		A6917AB226B55C7500EE7DBE /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6917AB126B55C7500EE7DBE /* WebView.swift */; };
+		A6917AB426B55CD800EE7DBE /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6917AB326B55CD800EE7DBE /* ViewModel.swift */; };
+		A6917AB726B57A5900EE7DBE /* Controls.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6917AB626B57A5900EE7DBE /* Controls.swift */; };
+		A6917ABE26B6D79600EE7DBE /* wint.html in Resources */ = {isa = PBXBuildFile; fileRef = A6917ABD26B6D79600EE7DBE /* wint.html */; };
+		A69B7A6326B6B87F00774A85 /* JavascriptRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = A69B7A6226B6B87F00774A85 /* JavascriptRun.swift */; };
+		A69B7A6526B6BE9300774A85 /* mind-framework.js in Resources */ = {isa = PBXBuildFile; fileRef = A69B7A6426B6BE9300774A85 /* mind-framework.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A6917A9426B54B1700EE7DBE /* HexaControl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HexaControl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6917A9726B54B1700EE7DBE /* HexaControlApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexaControlApp.swift; sourceTree = "<group>"; };
-		A6917A9926B54B1700EE7DBE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A6917A9B26B54B1700EE7DBE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A6917A9E26B54B1700EE7DBE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A6917AA026B54B1700EE7DBE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A6917AA826B54B7C00EE7DBE /* ConnectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedView.swift; sourceTree = "<group>"; };
+		A6917AAA26B54B9B00EE7DBE /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		A6917AAD26B54C9100EE7DBE /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
+		A6917AB126B55C7500EE7DBE /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		A6917AB326B55CD800EE7DBE /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		A6917AB526B5634000EE7DBE /* HexaAssignment.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = HexaAssignment.md; sourceTree = "<group>"; };
+		A6917AB626B57A5900EE7DBE /* Controls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controls.swift; sourceTree = "<group>"; };
+		A6917ABD26B6D79600EE7DBE /* wint.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = wint.html; sourceTree = "<group>"; };
+		A69B7A6226B6B87F00774A85 /* JavascriptRun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavascriptRun.swift; sourceTree = "<group>"; };
+		A69B7A6426B6BE9300774A85 /* mind-framework.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "mind-framework.js"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6917AAE26B54C9100EE7DBE /* GameController.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -38,6 +56,7 @@
 			children = (
 				A6917A9626B54B1700EE7DBE /* HexaControl */,
 				A6917A9526B54B1700EE7DBE /* Products */,
+				A6917AAC26B54C9100EE7DBE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -52,11 +71,19 @@
 		A6917A9626B54B1700EE7DBE /* HexaControl */ = {
 			isa = PBXGroup;
 			children = (
+				A69B7A6426B6BE9300774A85 /* mind-framework.js */,
 				A6917A9726B54B1700EE7DBE /* HexaControlApp.swift */,
-				A6917A9926B54B1700EE7DBE /* ContentView.swift */,
+				A6917AAA26B54B9B00EE7DBE /* HomeView.swift */,
+				A6917AA826B54B7C00EE7DBE /* ConnectedView.swift */,
+				A69B7A6226B6B87F00774A85 /* JavascriptRun.swift */,
+				A6917AB626B57A5900EE7DBE /* Controls.swift */,
+				A6917AB526B5634000EE7DBE /* HexaAssignment.md */,
 				A6917A9B26B54B1700EE7DBE /* Assets.xcassets */,
 				A6917AA026B54B1700EE7DBE /* Info.plist */,
 				A6917A9D26B54B1700EE7DBE /* Preview Content */,
+				A6917AB126B55C7500EE7DBE /* WebView.swift */,
+				A6917ABD26B6D79600EE7DBE /* wint.html */,
+				A6917AB326B55CD800EE7DBE /* ViewModel.swift */,
 			);
 			path = HexaControl;
 			sourceTree = "<group>";
@@ -67,6 +94,14 @@
 				A6917A9E26B54B1700EE7DBE /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		A6917AAC26B54C9100EE7DBE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A6917AAD26B54C9100EE7DBE /* GameController.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -126,7 +161,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A69B7A6526B6BE9300774A85 /* mind-framework.js in Resources */,
 				A6917A9F26B54B1700EE7DBE /* Preview Assets.xcassets in Resources */,
+				A6917ABE26B6D79600EE7DBE /* wint.html in Resources */,
 				A6917A9C26B54B1700EE7DBE /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -138,8 +175,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A6917A9A26B54B1700EE7DBE /* ContentView.swift in Sources */,
+				A6917AB426B55CD800EE7DBE /* ViewModel.swift in Sources */,
+				A6917AB726B57A5900EE7DBE /* Controls.swift in Sources */,
+				A6917AAB26B54B9B00EE7DBE /* HomeView.swift in Sources */,
+				A6917AB226B55C7500EE7DBE /* WebView.swift in Sources */,
 				A6917A9826B54B1700EE7DBE /* HexaControlApp.swift in Sources */,
+				A6917AA926B54B7C00EE7DBE /* ConnectedView.swift in Sources */,
+				A69B7A6326B6B87F00774A85 /* JavascriptRun.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,7 +314,7 @@
 				DEVELOPMENT_TEAM = 777HSYC52E;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = HexaControl/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -294,7 +336,7 @@
 				DEVELOPMENT_TEAM = 777HSYC52E;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = HexaControl/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
