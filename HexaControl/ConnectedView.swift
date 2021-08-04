@@ -198,27 +198,32 @@ struct ConnectedView: View {
                                     .padding()
                                 
                                 HStack{
-                                    Text("Gait: \(rState.gait)")
-                                        .font(.title2)
-                                        .padding()
-                                    Text("Lift: \(rState.lift)")
-                                        .font(.title2)
-                                        .padding()
-                                }
-                                HStack{
-                                    Text("Step length: \(rState.stepLength, specifier: "%.2f")")
-                                        .font(.title2)
-                                        .padding()
-                                    if rState.marching {
-                                        Text("Marching: True")
+                                    VStack(alignment: .trailing){
+                                            Text("Gait: \(rState.gait)")
+                                                .font(.title2)
+                                                .padding()
+                                        
+                                            Text("Step length: \(rState.stepLength, specifier: "%.2f")")
+                                                .font(.title2)
+                                                .padding()
+                                    }
+                                    VStack(alignment: .leading){
+                                        Text("Lift: \(rState.lift)")
                                             .font(.title2)
                                             .padding()
-                                    } else {
-                                        Text("Marching: False")
-                                            .font(.title2)
-                                            .padding()
+                                        if rState.marching {
+                                            Text("Marching")
+                                                .font(.title2)
+                                                .padding()
+                                        } else {
+                                            Text("Not Marching")
+                                                .font(.title2)
+                                                .padding()
+                                        }
                                     }
                                 }
+                                
+                                
                                 Button(action: {
                                     menuOpen = true
                                 }) {
@@ -335,7 +340,6 @@ struct ConnectedView: View {
         }
         
         func conDisconnected(notif: Notification) -> Void{
-            print("dc")
             ConnectController()
             isSearching = true
         }
@@ -422,7 +426,6 @@ struct ConnectedView: View {
                 let finalData = JsonDumps(data: outputDat)
                 if finalData != "{\"None\":\"None\"}"{
                     self.viewModel.valuePublisher.send("conJsonRcv('\(finalData)');")
-                    print(finalData)
                 }
             }
         }
